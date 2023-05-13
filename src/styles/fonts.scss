@@ -1,0 +1,9 @@
+@import './mixins.scss';
+
+@include font($family: 'SF Pro Text', $weight: 400, $url: '../assets/fonts/SFPro/SFProText-Regular.ttf');
+@include font($family: 'SF Pro Text', $weight: 500, $url: '../assets/fonts/SFPro/SFProText-Medium.ttf');
+@include font($family: 'SF Pro Text', $weight: 600, $url: '../assets/fonts/SFPro/SFProText-Semibold.ttf');
+@include font($family: 'SF Pro Text', $weight: 700, $url: '../assets/fonts/SFPro/SFProText-Bold.ttf');
+
+@include font($family: 'Segoe UI', $weight: 400, $url: '../assets/fonts/SegoeUi/SegoeUI.ttf');
+@include font($family: 'Segoe UI', $weight: 700, $url: '../assets/fonts/SegoeUi/SegoeUI-Bold.ttf');

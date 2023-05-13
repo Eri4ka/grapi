@@ -1,0 +1,18 @@
+:root {
+  --primary-font: 'Segoe UI';
+  --secondary-font: 'SF Pro Text';
+  --font-family: var(--primary-font), var(--secondary-font), system-ui, Helvetica, Arial, sans-serif;
+  --font-size: 16px;
+  --color-black-00: #41525d;
+  --color-black-10: #3b4a54;
+  --color-gray-00: #f0f2f5;
+  --color-gray-10: #667781;
+  --color-green-00: #00a884;
+  --color-green-10: #008069;
+  --color-green-20: #017561;
+  --color-red-00: #ea0038;
+  --color-white-00: #fff;
+  --modal-shadow: 0 17px 50px 0 rgba(11, 20, 26, 0.19), 0 12px 15px 0 rgba(11, 20, 26, 0.24);
+  --transition-delay: 0.3s;
+  --transition-timing: ease-out;
+}
