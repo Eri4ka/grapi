@@ -6,3 +6,8 @@ export type TQrResponse = {
   type: 'qrCode' | 'error' | 'alreadyLogged';
   message: string;
 };
+
+export type TSendMessageRequest = {
+  chatId: string;
+  message: string;
+};

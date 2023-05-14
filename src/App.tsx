@@ -1,36 +1,71 @@
 import { useContext, useEffect, useState } from 'react';
 
+import { NotificationService } from '@/api/services/NotificationService';
 import { AuthContext } from '@/components/AuthManager';
+import Chat from '@/components/Chat';
 import GetInstanceForm from '@/components/GetInstanceForm';
 import GetQrForm from '@/components/GetQrForm';
+import { MessageContext } from '@/components/MessageManager';
 import AppLayout from '@/ui/AppLayout';
 
 const App = () => {
-  const { authStatus } = useContext(AuthContext);
+  const { authStatus, setAuthStatus, idInstance, apiTokenInstance } = useContext(AuthContext);
+  const { companionPhone, messageData, handleAddMessageData } = useContext(MessageContext);
 
-  const [isOpenInstanceForm, setIsOpenInstanceForm] = useState(false);
-  const [isOpenQrForm, setIsOpenQrForm] = useState(false);
+  const isInstanceFormOpen = authStatus === '';
+  const isQrFormOpen = authStatus === 'notAuthorized';
+  const isChatOpen = authStatus === 'authorized';
+
+  // useEffect(() => {
+  //   if (authStatus === '') {
+  //     setIsOpenInstanceForm(true);
+  //   }
+
+  //   if (authStatus === 'notAuthorized') {
+  //     setIsOpenQrForm(true);
+  //     setIsOpenInstanceForm(false);
+  //   }
+
+  //   if (authStatus === 'authorized') {
+  //     setIsOpenQrForm(false);
+  //     setIsOpenInstanceForm(false);
+  //   }
+  // }, [authStatus]);
 
   useEffect(() => {
-    if (authStatus === '') {
-      setIsOpenInstanceForm(true);
-    }
+    const fetchNoty = async () => {
+      const response = await NotificationService.getNotification(idInstance, apiTokenInstance);
 
-    if (authStatus === 'notAuthorized') {
-      setIsOpenQrForm(true);
-      setIsOpenInstanceForm(false);
-    }
+      if (response) {
+        const responseBody = await response.body;
 
-    if (authStatus === 'authorized') {
-      setIsOpenQrForm(false);
-      setIsOpenInstanceForm(false);
-    }
-  }, [authStatus]);
+        if (responseBody.typeWebhook === 'stateInstanceChanged') {
+          setAuthStatus(responseBody.stateInstance);
+          await NotificationService.deleteNotification(idInstance, apiTokenInstance, response.receiptId);
+        }
 
+        if (responseBody.typeWebhook === 'outgoingMessageReceived') {
+          await NotificationService.deleteNotification(idInstance, apiTokenInstance, response.receiptId);
+        }
+
+        if (responseBody.typeWebhook === 'incomingMessageReceived') {
+          // handleAddMessageData({idMessage: responseBody.idMessage, })
+          await NotificationService.deleteNotification(idInstance, apiTokenInstance, response.receiptId);
+        }
+      }
+    };
+
+    const timer = setInterval(() => fetchNoty(), 5000);
+    return () => {
+      clearInterval(timer);
+    };
+  }, [idInstance, apiTokenInstance, setAuthStatus]);
+  console.log(authStatus);
   return (
     <AppLayout>
-      <GetInstanceForm isOpen={isOpenInstanceForm} />
-      <GetQrForm isOpen={isOpenQrForm} />
+      {isInstanceFormOpen && <GetInstanceForm />}
+      {isQrFormOpen && <GetQrForm />}
+      {isChatOpen && <Chat />}
     </AppLayout>
   );
 };

@@ -5,6 +5,7 @@ module.exports = {
   parserOptions: { ecmaVersion: 'latest', sourceType: 'module' },
   plugins: ['react-refresh', 'import'],
   rules: {
+    'no-useless-escape': 'off',
     'react/react-in-jsx-scope': ['off'],
     'import/order': [
       'error',

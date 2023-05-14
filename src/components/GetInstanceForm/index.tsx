@@ -1,5 +1,5 @@
 import { AxiosError } from 'axios';
-import { FC, useState, FormEvent, useContext } from 'react';
+import { useState, FormEvent, useContext } from 'react';
 
 import { UserService } from '@/api/services/UserService';
 import { TInstanceData } from '@/apptypes/auth';
@@ -10,13 +10,9 @@ import TextField from '@/ui/TextField';
 
 import styles from './styles.module.scss';
 
-type Props = {
-  isOpen: boolean;
-};
-
 const initialState = { idInstance: '', apiTokenInstance: '' };
 
-const GetInstanceForm: FC<Props> = ({ isOpen }) => {
+const GetInstanceForm = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [instanceValue, setInstanceValues] = useState<TInstanceData>(initialState);
@@ -51,7 +47,7 @@ const GetInstanceForm: FC<Props> = ({ isOpen }) => {
   };
 
   return (
-    <AuthModal title='Введите параметры доступа к Аккануту' isOpen={isOpen}>
+    <AuthModal title='Введите параметры доступа к Аккануту'>
       <form className={styles.form} onSubmit={handeSubmut}>
         <TextField
           name='idInstance'

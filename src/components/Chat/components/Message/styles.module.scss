@@ -1,0 +1,30 @@
+.container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.75rem;
+  padding: 0 4rem;
+
+  &_out {
+    justify-content: flex-end;
+
+    & .message {
+      background-color: var(--color-green-30);
+    }
+  }
+}
+
+.message {
+  color: var(--color-black-20);
+  border-radius: 7.5px;
+  background-color: var(--color-white-00);
+  max-width: 65%;
+  box-shadow: var(--message-shadow);
+
+  // &_out {
+  //   background-color: var(--color-green-30);
+  // }
+
+  &Content {
+    padding: 6px 7px 8px 9px;
+  }
+}

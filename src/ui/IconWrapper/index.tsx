@@ -5,6 +5,7 @@ import styles from './styles.module.scss';
 
 export enum IconSize {
   s = 'icon_s',
+  m = 'icon_m',
   l = 'icon_l',
 }
 

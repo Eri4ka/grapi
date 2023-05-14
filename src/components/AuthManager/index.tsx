@@ -50,7 +50,14 @@ const AuthManager: FC<Props> = ({ children }) => {
   }, [apiTokenInstance, idInstance]);
 
   return (
-    <AuthContext.Provider value={{ idInstance, apiTokenInstance, authStatus, setAuthStatus, handleSetInstanceData }}>
+    <AuthContext.Provider
+      value={{
+        idInstance,
+        apiTokenInstance,
+        authStatus,
+        setAuthStatus,
+        handleSetInstanceData,
+      }}>
       {children}
     </AuthContext.Provider>
   );

@@ -5,15 +5,10 @@ import Portal from '@/ui/Portal';
 import styles from './styles.module.scss';
 
 type Props = {
-  isOpen: boolean;
   children: ReactNode;
 };
 
-const ModalWrapper: FC<Props> = ({ isOpen, children }) => {
-  if (!isOpen) {
-    return null;
-  }
-
+const ModalWrapper: FC<Props> = ({ children }) => {
   return (
     <Portal>
       <div className={styles.wrapper}>{children}</div>

@@ -6,14 +6,13 @@ import styles from './styles.module.scss';
 import Heading from '../Heading';
 
 type Props = {
-  isOpen: boolean;
   title: string;
   children: ReactNode;
 };
 
-const AuthModal: FC<Props> = ({ isOpen, title, children }) => {
+const AuthModal: FC<Props> = ({ title, children }) => {
   return (
-    <ModalWrapper isOpen={isOpen}>
+    <ModalWrapper>
       <div className={styles.container}>
         <Heading title={title} />
         {children}
