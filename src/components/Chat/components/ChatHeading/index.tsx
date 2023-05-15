@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 import { UserService } from '@/api/services/UserService';
 import { AuthContext } from '@/components/AuthManager';
@@ -8,25 +8,27 @@ import BaseButton from '@/ui/BaseButton';
 import styles from './styles.module.scss';
 
 const ChatHeading = () => {
-  const { idInstance, apiTokenInstance, handleLogout } = useContext(AuthContext);
+  // Vars
+  const { idInstance, apiTokenInstance } = useContext(AuthContext);
   const { companionPhone } = useContext(MessageContext);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onLogout = async () => {
+  // Handlers
+  const handleLogout = async () => {
     try {
-      const response = await UserService.logout(idInstance, apiTokenInstance);
-
-      if (response.isLogout) {
-        handleLogout();
-      }
-    } catch (e) {
-      console.log(e);
+      setIsLoading(true);
+      await UserService.logout(idInstance, apiTokenInstance);
+    } catch {
+      setIsLoading(false);
     }
   };
 
   return (
     <div className={styles.wrapper}>
       <div className={styles.contact}>{companionPhone}</div>
-      <BaseButton onClick={onLogout}>Выйти</BaseButton>
+      <BaseButton onClick={handleLogout} isLoading={isLoading}>
+        Выйти
+      </BaseButton>
     </div>
   );
 };

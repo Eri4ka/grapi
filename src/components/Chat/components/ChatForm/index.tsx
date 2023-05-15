@@ -10,29 +10,26 @@ import IconWrapper, { IconSize } from '@/ui/IconWrapper';
 import styles from './styles.module.scss';
 
 const ChatForm = () => {
+  // Vars
   const { idInstance, apiTokenInstance } = useContext(AuthContext);
   const { companionPhone, handleAddMessageData } = useContext(MessageContext);
   const [messageValue, setMessageValue] = useState('');
 
-  const isDisabled = !messageValue;
-
+  // Handlers
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     setMessageValue(event.target.value);
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const data = { chatId: `${companionPhone}@c.us`, message: messageValue };
 
-    try {
-      const response = await MessageService.sendMessage(idInstance, apiTokenInstance, data);
+    const bodyData = { chatId: `${companionPhone}@c.us`, message: messageValue };
 
-      const time = getCurrentTime();
-      setMessageValue('');
-      handleAddMessageData({ idMessage: response.idMessage, message: messageValue, time, outer: true });
-    } catch (e) {
-      console.log(e);
-    }
+    const response = await MessageService.sendMessage(idInstance, apiTokenInstance, bodyData);
+
+    const currentTime = getCurrentTime();
+    handleAddMessageData({ idMessage: response.idMessage, message: messageValue, time: currentTime, outer: true });
+    setMessageValue('');
   };
 
   return (
@@ -45,7 +42,7 @@ const ChatForm = () => {
           value={messageValue}
           onChange={handleChange}
         />
-        <button className={styles.formButton} disabled={isDisabled}>
+        <button className={styles.formButton} disabled={!messageValue}>
           <IconWrapper icon={<SendIc />} size={IconSize.m} />
         </button>
       </form>

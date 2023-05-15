@@ -1,15 +1,11 @@
-import { AxiosError } from 'axios';
-import { FC, useState, FormEvent, useContext, useEffect } from 'react';
-import useSWR from 'swr';
+import { FC, useState, FormEvent } from 'react';
 
-import { UserService } from '@/api/services/UserService';
-import { TInstanceData } from '@/apptypes/auth';
-import { AuthContext } from '@/components/AuthManager';
 import AuthModal from '@/ui/AuthModal';
 import BaseButton from '@/ui/BaseButton';
-import { Loader, LoaderVariant } from '@/ui/Loader';
 import TextField from '@/ui/TextField';
 
+import { SUBMIT_BUTTON_TEXT, TITLE_TEXT, VALIDATION_FAILED_TEXT } from './constants';
+import { validatePhoneNumber } from './helpers';
 import styles from './styles.module.scss';
 
 type Props = {
@@ -17,26 +13,28 @@ type Props = {
 };
 
 const GetPhoneForm: FC<Props> = ({ onAddPhone }) => {
+  // Vars
   const [phoneValue, setPhoneValue] = useState('');
   const [errorText, setErrorText] = useState('');
 
-  const isDisabled = !phoneValue;
-
+  // Handlers
   const hanldeChangePhoneValue = (_: string, value: string) => setPhoneValue(value);
 
   const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setErrorText('');
 
-    if (/^[7]\d{10}$/g.test(phoneValue)) {
+    const isValidPhoneNumber = validatePhoneNumber(phoneValue);
+
+    if (isValidPhoneNumber) {
       onAddPhone(phoneValue);
     } else {
-      setErrorText('Невалидный номер телефона');
+      setErrorText(VALIDATION_FAILED_TEXT);
     }
   };
 
   return (
-    <AuthModal title='Введите номер телефона собеседника'>
+    <AuthModal title={TITLE_TEXT}>
       <form className={styles.form} onSubmit={handleSubmit}>
         <TextField
           name='phone'
@@ -45,8 +43,8 @@ const GetPhoneForm: FC<Props> = ({ onAddPhone }) => {
           onChange={hanldeChangePhoneValue}
           placeholder='7XXXXXXXXXX'
         />
-        <BaseButton type='submit' disabled={isDisabled}>
-          Подтвердить
+        <BaseButton type='submit' disabled={!phoneValue}>
+          {SUBMIT_BUTTON_TEXT}
         </BaseButton>
         {errorText && <span className={styles.formError}>{errorText}</span>}
       </form>

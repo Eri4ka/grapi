@@ -10,6 +10,7 @@ import GetPhoneForm from './components/GetPhoneForm';
 import styles from './styles.module.scss';
 
 const Chat = () => {
+  // Vars
   const { companionPhone, hanldleAddCompanionPhone } = useContext(MessageContext);
 
   if (!companionPhone) {

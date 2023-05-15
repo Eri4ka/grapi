@@ -33,7 +33,8 @@ const AuthManager: FC<Props> = ({ children }) => {
   };
 
   const handleLogout = () => {
-    setAuthStatus('notAuthorized');
+    setAuthStatus('');
+    handleSetInstanceData({ idInstance: '', apiTokenInstance: '' });
   };
 
   // Effects
@@ -43,7 +44,9 @@ const AuthManager: FC<Props> = ({ children }) => {
   }, [apiTokenInstance, idInstance, setCookie]);
 
   useEffect(() => {
-    if (idInstance && apiTokenInstance) {
+    const isInstanceExists = idInstance && apiTokenInstance;
+
+    if (isInstanceExists) {
       const fetchStateInstance = async () => {
         const data = await UserService.getStateInstance(idInstance, apiTokenInstance);
 

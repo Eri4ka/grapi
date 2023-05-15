@@ -8,11 +8,13 @@ import AuthModal from '@/ui/AuthModal';
 import BaseButton from '@/ui/BaseButton';
 import TextField from '@/ui/TextField';
 
+import { ID_TOOLTIP_TEXT, SUBMIT_BUTTON_TEXT, TITLE_TEXT, TOKEN_TOOLTIP_TEXT } from './constants';
 import styles from './styles.module.scss';
 
 const initialState = { idInstance: '', apiTokenInstance: '' };
 
 const GetInstanceForm = () => {
+  // Vars
   const [isLoading, setIsLoading] = useState(false);
   const [errorText, setErrorText] = useState('');
   const [instanceValue, setInstanceValues] = useState<TInstanceData>(initialState);
@@ -20,6 +22,7 @@ const GetInstanceForm = () => {
 
   const isDisabled = !instanceValue.idInstance || !instanceValue.apiTokenInstance;
 
+  // Handlers
   const handleSetInstanceValues = (field: string, value: string) => {
     setInstanceValues({ ...instanceValue, [field]: value });
   };
@@ -47,24 +50,24 @@ const GetInstanceForm = () => {
   };
 
   return (
-    <AuthModal title='Введите параметры доступа к Аккануту'>
+    <AuthModal title={TITLE_TEXT}>
       <form className={styles.form} onSubmit={handeSubmut}>
         <TextField
           name='idInstance'
           label='IdInstance'
-          tooltipText='Уникальный номер аккаунта'
+          tooltipText={ID_TOOLTIP_TEXT}
           value={instanceValue.idInstance}
           onChange={handleSetInstanceValues}
         />
         <TextField
           name='apiTokenInstance'
           label='ApiTokenInstance'
-          tooltipText='Ключ доступа аккаунта'
+          tooltipText={TOKEN_TOOLTIP_TEXT}
           value={instanceValue.apiTokenInstance}
           onChange={handleSetInstanceValues}
         />
         <BaseButton type='submit' disabled={isDisabled} isLoading={isLoading}>
-          ОК
+          {SUBMIT_BUTTON_TEXT}
         </BaseButton>
         {errorText && <span className={styles.formError}>{errorText}</span>}
       </form>

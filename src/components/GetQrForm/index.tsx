@@ -1,41 +1,37 @@
-import { AxiosError } from 'axios';
-import { useState, FormEvent, useContext, useEffect } from 'react';
-import useSWR from 'swr';
+import { useState, useContext, useEffect } from 'react';
 
 import { UserService } from '@/api/services/UserService';
-import { TInstanceData } from '@/apptypes/auth';
 import { AuthContext } from '@/components/AuthManager';
 import AuthModal from '@/ui/AuthModal';
 import BaseButton from '@/ui/BaseButton';
 import { Loader, LoaderVariant } from '@/ui/Loader';
-import TextField from '@/ui/TextField';
 
+import { BACK_BUTTON_TEXT, POLLING_TIMEOUT, TITLE_TEXT } from './constants';
 import styles from './styles.module.scss';
 
 const GetQrForm = () => {
-  const { idInstance, apiTokenInstance, setAuthStatus } = useContext(AuthContext);
+  // Vars
+  const { idInstance, apiTokenInstance, handleLogout } = useContext(AuthContext);
   const [isLoading, setIsLoading] = useState(false);
   const [qrData, setQrData] = useState('');
 
+  // Effects
   useEffect(() => {
-    if (idInstance && apiTokenInstance) {
-      const fetchQr = async () => {
-        try {
-          setIsLoading(true);
-          const data = await UserService.getQr(idInstance, apiTokenInstance);
+    const isInstanceExists = idInstance && apiTokenInstance;
 
-          if (data.type === 'qrCode') {
-            setIsLoading(false);
-            setQrData(data.message);
-          }
-        } catch (e) {
+    if (isInstanceExists) {
+      const fetchQrData = async () => {
+        setIsLoading(true);
+        const data = await UserService.getQr(idInstance, apiTokenInstance);
+
+        if (data.type === 'qrCode') {
           setIsLoading(false);
-          const error = e as AxiosError;
+          setQrData(data.message);
         }
       };
 
-      fetchQr();
-      const timer = setInterval(() => fetchQr(), 20000);
+      fetchQrData();
+      const timer = setInterval(() => fetchQrData(), POLLING_TIMEOUT);
 
       return () => {
         clearInterval(timer);
@@ -44,7 +40,7 @@ const GetQrForm = () => {
   }, [apiTokenInstance, idInstance]);
 
   return (
-    <AuthModal title='Отсканируйте Qr-код'>
+    <AuthModal title={TITLE_TEXT}>
       <div className={styles.wrapper}>
         <div className={styles.qr}>
           {isLoading ? (
@@ -53,7 +49,7 @@ const GetQrForm = () => {
             <img src={`data:image/jpeg;base64,${qrData}`} alt='qr-code' />
           )}
         </div>
-        <BaseButton onClick={() => setAuthStatus('')}>Назад</BaseButton>
+        <BaseButton onClick={handleLogout}>{BACK_BUTTON_TEXT}</BaseButton>
       </div>
     </AuthModal>
   );

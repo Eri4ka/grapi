@@ -11,3 +11,4 @@ export const DELETE_NOTIFICATION_ENDPOINT = 'DeleteNotification';
 
 /* Message */
 export const SEND_MESSAGE_ENDPOINT = 'SendMessage';
+export const GET_CHAT_HISTORY = 'GetChatHistory';

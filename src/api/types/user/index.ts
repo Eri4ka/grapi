@@ -1,16 +1,19 @@
 import { TStateInstance } from '@/apptypes/auth';
 
-type TQr = 'qrCode' | 'error' | 'alreadyLogged';
-
+/* STATE INSTANCE */
 export type TStateInstanceResponse = {
   stateInstance: TStateInstance;
 };
+
+/* QR */
+type TQr = 'qrCode' | 'error' | 'alreadyLogged';
 
 export type TQrResponse = {
   type: TQr;
   message: string;
 };
 
+/* LOGOUT */
 export type TLogoutResponse = {
   isLogout: boolean;
 };

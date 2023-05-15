@@ -1,21 +1,23 @@
 import { TStateInstance } from '@/apptypes/auth';
+import { TChatId, TIdMessage, TMessageType } from '@/apptypes/message';
 
+/* GET NOTIFICATION */
 type TWebhook = 'stateInstanceChanged' | 'incomingMessageReceived' | 'outgoingMessageReceived';
 
-type TBodyNotyStateInstance = {
+type TNotyStateBody = {
   typeWebhook: TWebhook;
   stateInstance: TStateInstance;
 };
 
-type TBodyNotyMessage = {
+type TNotyMessageBody = {
   typeWebhook: TWebhook;
   timestamp: number;
-  idMessage: string;
+  idMessage: TIdMessage;
   senderData: {
-    chatId: string;
+    chatId: TChatId;
   };
   messageData: {
-    typeMessage: string;
+    typeMessage: TMessageType;
     textMessageData: {
       textMessage: string;
     };
@@ -23,21 +25,22 @@ type TBodyNotyMessage = {
 };
 
 export type TNotyResponse = {
-  body: TBodyNotyStateInstance & TBodyNotyMessage;
+  body: TNotyStateBody & TNotyMessageBody;
   receiptId: number;
 };
 
 export type TTransformedNotyResponse = {
   receiptId: TNotyResponse['receiptId'];
   typeWebhook: TWebhook;
-  idMessage: TBodyNotyMessage['idMessage'];
-  senderPhone: TBodyNotyMessage['senderData']['chatId'];
-  typeMessage: TBodyNotyMessage['messageData']['typeMessage'];
-  textMessage: TBodyNotyMessage['messageData']['textMessageData']['textMessage'];
-  time: TBodyNotyMessage['timestamp'];
-  authState: TBodyNotyStateInstance['stateInstance'];
+  idMessage: TNotyMessageBody['idMessage'];
+  senderPhone: TNotyMessageBody['senderData']['chatId'];
+  typeMessage: TNotyMessageBody['messageData']['typeMessage'];
+  textMessage: TNotyMessageBody['messageData']['textMessageData']['textMessage'];
+  time: TNotyMessageBody['timestamp'];
+  authState: TNotyStateBody['stateInstance'];
 } | null;
 
+/* DELETE NOTIFICATION */
 export type TDeleteNotyPesponse = {
   result: boolean;
 };

@@ -1,6 +1,10 @@
-import { FC, useState, ReactNode, createContext } from 'react';
+import { FC, useState, ReactNode, createContext, useEffect, useContext } from 'react';
 
+import { MessageService } from '@/api/services/MessageService';
 import { TMessage } from '@/apptypes/message';
+import { AuthContext } from '@/components/AuthManager';
+
+import { COUNT_HISTORY_MESSAGES } from './constants';
 
 type TMessageContext = {
   companionPhone: string;
@@ -17,6 +21,7 @@ export const MessageContext = createContext<TMessageContext>({} as TMessageConte
 
 const MessageManager: FC<Props> = ({ children }) => {
   // Vars
+  const { idInstance, apiTokenInstance, authStatus } = useContext(AuthContext);
   const [companionPhone, setCompanionPhone] = useState('');
   const [messageData, setMessageData] = useState<TMessage[]>([]);
 
@@ -26,6 +31,29 @@ const MessageManager: FC<Props> = ({ children }) => {
   const handleAddMessageData = ({ idMessage, message, time, outer = false }: TMessage) => {
     setMessageData((prev) => [...prev, { idMessage, message, time, outer }]);
   };
+
+  // Effects
+  useEffect(() => {
+    const isChatExists = companionPhone && idInstance && apiTokenInstance;
+
+    if (isChatExists) {
+      const fetchChatHistory = async () => {
+        const bodyData = { chatId: `${companionPhone}@c.us`, count: COUNT_HISTORY_MESSAGES };
+
+        const response = await MessageService.getChatHistory(idInstance, apiTokenInstance, bodyData);
+        setMessageData(response);
+      };
+
+      fetchChatHistory();
+    }
+  }, [apiTokenInstance, companionPhone, idInstance]);
+
+  useEffect(() => {
+    if (authStatus === 'notAuthorized') {
+      setCompanionPhone('');
+      setMessageData([]);
+    }
+  }, [authStatus]);
 
   return (
     <MessageContext.Provider

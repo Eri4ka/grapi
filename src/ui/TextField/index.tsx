@@ -17,6 +17,7 @@ type Props = {
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
 const TextField: FC<Props> = ({ name, label, value, onChange, className, tooltipText, ...props }) => {
+  // Handlers
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.name, event.target.value);
   };

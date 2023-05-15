@@ -6,20 +6,25 @@ import Chat from '@/components/Chat';
 import GetInstanceForm from '@/components/GetInstanceForm';
 import GetQrForm from '@/components/GetQrForm';
 import { MessageContext } from '@/components/MessageManager';
+import { POLLING_NOTY_TIMEOUT } from '@/constants/index';
 import { getCurrentTime } from '@/helpers/message';
 import AppLayout from '@/ui/AppLayout';
 
 const App = () => {
+  // Vars
   const { authStatus, setAuthStatus, idInstance, apiTokenInstance } = useContext(AuthContext);
   const { companionPhone, handleAddMessageData } = useContext(MessageContext);
 
-  const isInstanceFormOpen = authStatus === '';
-  const isQrFormOpen = authStatus === 'notAuthorized';
+  const isQrFormOpen = authStatus === 'notAuthorized' || authStatus === 'starting';
   const isChatOpen = authStatus === 'authorized';
+  const isInstanceFormOpen = !isQrFormOpen && !isChatOpen;
 
+  // Effects
   useEffect(() => {
-    if (idInstance && apiTokenInstance) {
-      const fetchNoty = async () => {
+    const isInstanceExists = idInstance && apiTokenInstance;
+
+    if (isInstanceExists) {
+      const fetchNotifications = async () => {
         const response = await NotificationService.getNotification(idInstance, apiTokenInstance);
 
         if (response) {
@@ -56,7 +61,7 @@ const App = () => {
         }
       };
 
-      const timer = setInterval(() => fetchNoty(), 5000);
+      const timer = setInterval(() => fetchNotifications(), POLLING_NOTY_TIMEOUT);
 
       return () => {
         clearInterval(timer);

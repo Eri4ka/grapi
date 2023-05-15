@@ -1,9 +1,9 @@
 import { FC, ReactNode } from 'react';
 
+import Heading from '@/ui/Heading';
 import ModalWrapper from '@/ui/ModalWrapper';
 
 import styles from './styles.module.scss';
-import Heading from '../Heading';
 
 type Props = {
   title: string;
