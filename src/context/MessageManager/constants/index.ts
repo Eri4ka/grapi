@@ -1,0 +1,1 @@
+export const COUNT_HISTORY_MESSAGES = 50;

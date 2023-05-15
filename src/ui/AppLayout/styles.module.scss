@@ -1,0 +1,28 @@
+.wrapper {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background-color: var(--color-gray-00);
+}
+
+.header {
+  height: 13.75rem;
+  background-color: var(--color-green-00);
+
+  &Content {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0.875rem;
+    max-width: calc(1000px);
+    width: calc(100vw - 1rem);
+    margin: 1.75rem auto 0 auto;
+  }
+
+  &Title {
+    font-weight: 700;
+    font-size: 0.875rem;
+    color: var(--color-white-00);
+    text-transform: uppercase;
+  }
+}

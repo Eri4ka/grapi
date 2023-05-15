@@ -1,0 +1,32 @@
+// Media
+$m: 768px;
+$s: 576px;
+
+:root {
+  --primary-font: 'Segoe UI';
+  --font-family: var(--primary-font), system-ui, Helvetica, Arial, sans-serif;
+  --font-size: 16px;
+  --color-black-00: #41525d;
+  --color-black-10: #3b4a54;
+  --color-black-20: #111b21;
+  --color-gray-00: #f0f2f5;
+  --color-gray-10: #667781;
+  --color-gray-20: #e9edef;
+  --color-gray-30: #eaedf5;
+  --color-green-00: #00a884;
+  --color-green-10: #008069;
+  --color-green-20: #017561;
+  --color-green-30: #d9fdd3;
+  --color-red-00: #ea0038;
+  --color-white-00: #fff;
+  --chat-color: #eae6df;
+  --button-secondary-shadow: 0 2px 7px rgba(11, 20, 26, 0.09), 0 1px 2px rgba(11, 20, 26, 0.05);
+  --message-shadow: 0 1px 0.5px rgba(11, 20, 26, 0.13);
+  --modal-shadow: 0 17px 50px 0 rgba(11, 20, 26, 0.19), 0 12px 15px 0 rgba(11, 20, 26, 0.24);
+  --transition-delay: 0.3s;
+  --transition-timing: ease-out;
+
+  @media (max-width: $s) {
+    --font-size: 14px;
+  }
+}

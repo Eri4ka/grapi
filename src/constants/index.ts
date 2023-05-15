@@ -1,0 +1,1 @@
+export const POLLING_NOTY_TIMEOUT = 5000;

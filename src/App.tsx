@@ -1,35 +1,84 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useContext, useEffect, Suspense, lazy } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+import { NotificationService } from '@/api/services/NotificationService';
+import { POLLING_NOTY_TIMEOUT } from '@/constants/index';
+import { AuthContext } from '@/context/AuthManager';
+import { MessageContext } from '@/context/MessageManager';
+import { getCurrentTime } from '@/helpers/message';
+import AppLayout from '@/ui/AppLayout';
+
+const GetInstanceForm = lazy(() => import('@/components/GetInstanceForm'));
+const GetQrForm = lazy(() => import('@/components/GetQrForm'));
+const Chat = lazy(() => import('@/components/Chat'));
+
+const App = () => {
+  // Vars
+  const { authStatus, setAuthStatus, idInstance, apiTokenInstance } = useContext(AuthContext);
+  const { companionPhone, handleAddMessageData } = useContext(MessageContext);
+
+  const isQrFormOpen = authStatus === 'notAuthorized' || authStatus === 'starting';
+  const isChatOpen = authStatus === 'authorized';
+  const isInstanceFormOpen = !isQrFormOpen && !isChatOpen;
+
+  // Effects
+  useEffect(() => {
+    const isInstanceExists = idInstance && apiTokenInstance;
+
+    if (isInstanceExists) {
+      const fetchNotifications = async () => {
+        const response = await NotificationService.getNotification(idInstance, apiTokenInstance);
+
+        if (response) {
+          if (response.typeWebhook === 'stateInstanceChanged') {
+            setAuthStatus(response.authState);
+          }
+
+          if (
+            response.typeWebhook === 'outgoingMessageReceived' &&
+            response.typeMessage === 'textMessage' &&
+            response.senderPhone === companionPhone
+          ) {
+            handleAddMessageData({
+              idMessage: response.idMessage,
+              message: response.textMessage,
+              time: getCurrentTime(response.time),
+              outer: true,
+            });
+          }
+
+          if (
+            response.typeWebhook === 'incomingMessageReceived' &&
+            response.typeMessage === 'textMessage' &&
+            response.senderPhone === companionPhone
+          ) {
+            handleAddMessageData({
+              idMessage: response.idMessage,
+              message: response.textMessage,
+              time: getCurrentTime(response.time),
+            });
+          }
+
+          await NotificationService.deleteNotification(idInstance, apiTokenInstance, response.receiptId);
+        }
+      };
+
+      const timer = setInterval(() => fetchNotifications(), POLLING_NOTY_TIMEOUT);
+
+      return () => {
+        clearInterval(timer);
+      };
+    }
+  }, [idInstance, apiTokenInstance, setAuthStatus, handleAddMessageData, companionPhone]);
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
-}
+    <AppLayout>
+      <Suspense>
+        {isInstanceFormOpen && <GetInstanceForm />}
+        {isQrFormOpen && <GetQrForm />}
+        {isChatOpen && <Chat />}
+      </Suspense>
+    </AppLayout>
+  );
+};
 
-export default App
+export default App;

@@ -1,0 +1,28 @@
+@import 'src/styles/variables.scss';
+
+.wrapper {
+  position: relative;
+  height: calc(100vh - 60px);
+  background-color: var(--chat-color);
+  max-height: 1000px;
+  display: flex;
+  flex-direction: column;
+  z-index: 0;
+
+  @media (max-width: $m) {
+    height: 100vh;
+    max-height: none;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    background: url('../../assets/images/chat/bg.png');
+    height: 100%;
+    width: 100%;
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    z-index: -1;
+  }
+}

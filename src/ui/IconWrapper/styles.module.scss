@@ -1,0 +1,20 @@
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  &_s {
+    height: 1rem;
+    width: 1rem;
+  }
+
+  &_m {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+
+  &_l {
+    height: 2.5rem;
+    width: 2.5rem;
+  }
+}

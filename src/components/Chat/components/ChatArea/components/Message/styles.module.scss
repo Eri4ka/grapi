@@ -1,0 +1,53 @@
+@import 'src/styles/variables.scss';
+
+.container {
+  display: flex;
+  justify-content: flex-start;
+  margin-bottom: 0.75rem;
+  padding: 0 4rem;
+
+  @media (max-width: $m) {
+    padding: 0 3rem;
+  }
+
+  @media (max-width: $s) {
+    padding: 0 2rem;
+  }
+
+  &_out {
+    justify-content: flex-end;
+
+    & .message {
+      background-color: var(--color-green-30);
+    }
+  }
+}
+
+.message {
+  color: var(--color-black-20);
+  border-radius: 7.5px;
+  background-color: var(--color-white-00);
+  max-width: 65%;
+  box-shadow: var(--message-shadow);
+
+  &Content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 0.875rem;
+    padding: 6px 7px 8px 9px;
+    gap: 0.375rem;
+  }
+
+  &Text {
+    word-break: break-all;
+  }
+
+  &Date {
+    font-size: 0.688rem;
+    color: var(--color-gray-10);
+    margin-bottom: -0.375rem;
+    margin-top: 0.625rem;
+    align-self: flex-end;
+  }
+}

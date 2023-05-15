@@ -1,0 +1,4 @@
+@import './mixins.scss';
+
+@include font($family: 'Segoe UI', $weight: 400, $url: '../assets/fonts/SegoeUi/SegoeUI.ttf');
+@include font($family: 'Segoe UI', $weight: 700, $url: '../assets/fonts/SegoeUi/SegoeUI-Bold.ttf');
