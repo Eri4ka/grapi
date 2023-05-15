@@ -3,7 +3,7 @@ import { useContext, useState } from 'react';
 import { UserService } from '@/api/services/UserService';
 import { AuthContext } from '@/context/AuthManager';
 import { MessageContext } from '@/context/MessageManager';
-import BaseButton from '@/ui/BaseButton';
+import BaseButton, { ButtonVariant } from '@/ui/BaseButton';
 
 import styles from './styles.module.scss';
 
@@ -26,7 +26,7 @@ const ChatHeading = () => {
   return (
     <div className={styles.wrapper}>
       <div className={styles.contact}>{companionPhone}</div>
-      <BaseButton onClick={handleLogout} isLoading={isLoading}>
+      <BaseButton variant={ButtonVariant.secondary} onClick={handleLogout} isLoading={isLoading}>
         Выйти
       </BaseButton>
     </div>

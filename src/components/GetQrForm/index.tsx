@@ -3,7 +3,7 @@ import { useState, useContext, useEffect } from 'react';
 import { UserService } from '@/api/services/UserService';
 import { AuthContext } from '@/context/AuthManager';
 import AuthModal from '@/ui/AuthModal';
-import BaseButton from '@/ui/BaseButton';
+import BaseButton, { ButtonVariant } from '@/ui/BaseButton';
 import { Loader, LoaderVariant } from '@/ui/Loader';
 
 import { BACK_BUTTON_TEXT, POLLING_TIMEOUT, TITLE_TEXT } from './constants';
@@ -49,7 +49,9 @@ const GetQrForm = () => {
             <img src={`data:image/jpeg;base64,${qrData}`} alt='qr-code' />
           )}
         </div>
-        <BaseButton onClick={handleLogout}>{BACK_BUTTON_TEXT}</BaseButton>
+        <BaseButton variant={ButtonVariant.secondary} onClick={handleLogout}>
+          {BACK_BUTTON_TEXT}
+        </BaseButton>
       </div>
     </AuthModal>
   );
