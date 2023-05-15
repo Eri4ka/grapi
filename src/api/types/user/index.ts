@@ -17,3 +17,15 @@ export type TQrResponse = {
 export type TLogoutResponse = {
   isLogout: boolean;
 };
+
+/* SET SETTINGS */
+export const SetSettingsData = {
+  markIncomingMessagesReaded: 'yes',
+  outgoingMessageWebhook: 'yes',
+  stateWebhook: 'yes',
+  incomingWebhook: 'yes',
+};
+
+export type TSetSettingsResponse = {
+  saveSettings: boolean;
+};

@@ -35,6 +35,8 @@ const GetInstanceForm = () => {
       setErrorText('');
       const data = await UserService.getStateInstance(instanceValue.idInstance, instanceValue.apiTokenInstance);
 
+      await UserService.setSettings(instanceValue.idInstance, instanceValue.apiTokenInstance);
+
       setIsLoading(false);
       setInstanceValues(initialState);
 

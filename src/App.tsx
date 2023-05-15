@@ -1,14 +1,15 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, Suspense, lazy } from 'react';
 
 import { NotificationService } from '@/api/services/NotificationService';
-import Chat from '@/components/Chat';
-import GetInstanceForm from '@/components/GetInstanceForm';
-import GetQrForm from '@/components/GetQrForm';
 import { POLLING_NOTY_TIMEOUT } from '@/constants/index';
 import { AuthContext } from '@/context/AuthManager';
 import { MessageContext } from '@/context/MessageManager';
 import { getCurrentTime } from '@/helpers/message';
 import AppLayout from '@/ui/AppLayout';
+
+const GetInstanceForm = lazy(() => import('@/components/GetInstanceForm'));
+const GetQrForm = lazy(() => import('@/components/GetQrForm'));
+const Chat = lazy(() => import('@/components/Chat'));
 
 const App = () => {
   // Vars
@@ -71,9 +72,11 @@ const App = () => {
 
   return (
     <AppLayout>
-      {isInstanceFormOpen && <GetInstanceForm />}
-      {isQrFormOpen && <GetQrForm />}
-      {isChatOpen && <Chat />}
+      <Suspense>
+        {isInstanceFormOpen && <GetInstanceForm />}
+        {isQrFormOpen && <GetQrForm />}
+        {isChatOpen && <Chat />}
+      </Suspense>
     </AppLayout>
   );
 };
