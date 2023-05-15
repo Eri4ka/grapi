@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { MessageContext } from '@/components/MessageManager';
+import { MessageContext } from '@/context/MessageManager';
 import ChatModal from '@/ui/СhatModal';
 
 import ChatArea from './components/ChatArea';

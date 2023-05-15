@@ -3,7 +3,7 @@ import { useState, FormEvent, useContext } from 'react';
 
 import { UserService } from '@/api/services/UserService';
 import { TInstanceData } from '@/apptypes/auth';
-import { AuthContext } from '@/components/AuthManager';
+import { AuthContext } from '@/context/AuthManager';
 import AuthModal from '@/ui/AuthModal';
 import BaseButton from '@/ui/BaseButton';
 import TextField from '@/ui/TextField';

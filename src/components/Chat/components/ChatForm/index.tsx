@@ -2,8 +2,8 @@ import { ChangeEvent, FormEvent, useContext, useState } from 'react';
 
 import { MessageService } from '@/api/services/MessageService';
 import { ReactComponent as SendIc } from '@/assets/images/common/send.svg';
-import { AuthContext } from '@/components/AuthManager';
-import { MessageContext } from '@/components/MessageManager';
+import { AuthContext } from '@/context/AuthManager';
+import { MessageContext } from '@/context/MessageManager';
 import { getCurrentTime } from '@/helpers/message';
 import IconWrapper, { IconSize } from '@/ui/IconWrapper';
 

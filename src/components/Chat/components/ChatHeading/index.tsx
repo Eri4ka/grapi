@@ -1,8 +1,8 @@
 import { useContext, useState } from 'react';
 
 import { UserService } from '@/api/services/UserService';
-import { AuthContext } from '@/components/AuthManager';
-import { MessageContext } from '@/components/MessageManager';
+import { AuthContext } from '@/context/AuthManager';
+import { MessageContext } from '@/context/MessageManager';
 import BaseButton from '@/ui/BaseButton';
 
 import styles from './styles.module.scss';

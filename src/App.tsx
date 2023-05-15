@@ -1,12 +1,12 @@
 import { useContext, useEffect } from 'react';
 
 import { NotificationService } from '@/api/services/NotificationService';
-import { AuthContext } from '@/components/AuthManager';
 import Chat from '@/components/Chat';
 import GetInstanceForm from '@/components/GetInstanceForm';
 import GetQrForm from '@/components/GetQrForm';
-import { MessageContext } from '@/components/MessageManager';
 import { POLLING_NOTY_TIMEOUT } from '@/constants/index';
+import { AuthContext } from '@/context/AuthManager';
+import { MessageContext } from '@/context/MessageManager';
 import { getCurrentTime } from '@/helpers/message';
 import AppLayout from '@/ui/AppLayout';
 

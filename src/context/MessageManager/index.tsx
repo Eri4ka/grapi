@@ -2,7 +2,7 @@ import { FC, useState, ReactNode, createContext, useEffect, useContext } from 'r
 
 import { MessageService } from '@/api/services/MessageService';
 import { TMessage } from '@/apptypes/message';
-import { AuthContext } from '@/components/AuthManager';
+import { AuthContext } from '@/context/AuthManager';
 
 import { COUNT_HISTORY_MESSAGES } from './constants';
 

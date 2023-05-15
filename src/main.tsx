@@ -5,8 +5,8 @@ import 'react-tooltip/dist/react-tooltip.css';
 
 import '@/styles/index.scss';
 
-import AuthManager from '@/components/AuthManager';
-import MessageManager from '@/components/MessageManager';
+import AuthManager from '@/context/AuthManager';
+import MessageManager from '@/context/MessageManager';
 
 import App from './App.tsx';
 

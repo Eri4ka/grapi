@@ -27,6 +27,7 @@
       "@/apptypes/*": ["types/*"],
       "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
+      "@/context/*": ["context/*"],
       "@/constants/*": ["constants/*"],
       "@/helpers/*": ["helpers/*"],
       "@/styles/*": ["styles/*"],

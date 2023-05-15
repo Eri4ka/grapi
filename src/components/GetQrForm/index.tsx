@@ -1,7 +1,7 @@
 import { useState, useContext, useEffect } from 'react';
 
 import { UserService } from '@/api/services/UserService';
-import { AuthContext } from '@/components/AuthManager';
+import { AuthContext } from '@/context/AuthManager';
 import AuthModal from '@/ui/AuthModal';
 import BaseButton from '@/ui/BaseButton';
 import { Loader, LoaderVariant } from '@/ui/Loader';

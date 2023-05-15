@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { MessageContext } from '@/components/MessageManager';
+import { MessageContext } from '@/context/MessageManager';
 
 import Message from './components/Message';
 import styles from './styles.module.scss';
