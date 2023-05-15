@@ -1,19 +1,11 @@
-import { AxiosError } from 'axios';
-import { FC, useState, FormEvent, useContext, useEffect } from 'react';
-import useSWR from 'swr';
+import { useContext } from 'react';
 
-import { UserService } from '@/api/services/UserService';
-import { TInstanceData } from '@/apptypes/auth';
-import { AuthContext } from '@/components/AuthManager';
 import { MessageContext } from '@/components/MessageManager';
-import AuthModal from '@/ui/AuthModal';
-import BaseButton from '@/ui/BaseButton';
-import { Loader, LoaderVariant } from '@/ui/Loader';
-import TextField from '@/ui/TextField';
 import ChatModal from '@/ui/СhatModal';
 
 import ChatArea from './components/ChatArea';
 import ChatForm from './components/ChatForm';
+import ChatHeading from './components/ChatHeading';
 import GetPhoneForm from './components/GetPhoneForm';
 import styles from './styles.module.scss';
 
@@ -27,7 +19,7 @@ const Chat = () => {
   return (
     <ChatModal>
       <div className={styles.wrapper}>
-        {companionPhone}
+        <ChatHeading />
         <ChatArea />
         <ChatForm />
       </div>

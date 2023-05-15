@@ -18,27 +18,29 @@ const GetQrForm = () => {
   const [qrData, setQrData] = useState('');
 
   useEffect(() => {
-    const fetchQr = async () => {
-      try {
-        setIsLoading(true);
-        const data = await UserService.getQr(idInstance, apiTokenInstance);
+    if (idInstance && apiTokenInstance) {
+      const fetchQr = async () => {
+        try {
+          setIsLoading(true);
+          const data = await UserService.getQr(idInstance, apiTokenInstance);
 
-        if (data.type === 'qrCode') {
+          if (data.type === 'qrCode') {
+            setIsLoading(false);
+            setQrData(data.message);
+          }
+        } catch (e) {
           setIsLoading(false);
-          setQrData(data.message);
+          const error = e as AxiosError;
         }
-      } catch (e) {
-        setIsLoading(false);
-        const error = e as AxiosError;
-      }
-    };
+      };
 
-    fetchQr();
-    const timer = setInterval(() => fetchQr(), 20000);
+      fetchQr();
+      const timer = setInterval(() => fetchQr(), 20000);
 
-    return () => {
-      clearInterval(timer);
-    };
+      return () => {
+        clearInterval(timer);
+      };
+    }
   }, [apiTokenInstance, idInstance]);
 
   return (

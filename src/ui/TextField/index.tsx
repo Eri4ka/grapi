@@ -16,7 +16,7 @@ type Props = {
   tooltipText?: string;
 } & Omit<InputHTMLAttributes<HTMLInputElement>, 'onChange'>;
 
-const TextField: FC<Props> = ({ name, label, value, onChange, className, tooltipText }) => {
+const TextField: FC<Props> = ({ name, label, value, onChange, className, tooltipText, ...props }) => {
   const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
     onChange(event.target.name, event.target.value);
   };
@@ -33,7 +33,7 @@ const TextField: FC<Props> = ({ name, label, value, onChange, className, tooltip
           </Tooltip>
         )}
       </div>
-      <input className={styles.input} name={name} type='text' value={value} onChange={handleChange} />
+      <input className={styles.input} name={name} type='text' value={value} onChange={handleChange} {...props} />
     </div>
   );
 };

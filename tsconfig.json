@@ -24,10 +24,11 @@
     "baseUrl": "src",
     "paths": {
       "@/api/*": ["api/*"],
+      "@/apptypes/*": ["types/*"],
       "@/assets/*": ["assets/*"],
       "@/components/*": ["components/*"],
       "@/constants/*": ["constants/*"],
-      "@/apptypes/*": ["types/*"],
+      "@/helpers/*": ["helpers/*"],
       "@/styles/*": ["styles/*"],
       "@/pages/*": ["pages/*"],
       "@/ui/*": ["ui/*"]

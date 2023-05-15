@@ -2,8 +2,8 @@ import { useContext } from 'react';
 
 import { MessageContext } from '@/components/MessageManager';
 
+import Message from './components/Message';
 import styles from './styles.module.scss';
-import Message from '../Message';
 
 const ChatArea = () => {
   const { messageData } = useContext(MessageContext);

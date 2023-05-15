@@ -4,6 +4,7 @@ import { MessageService } from '@/api/services/MessageService';
 import { ReactComponent as SendIc } from '@/assets/images/common/send.svg';
 import { AuthContext } from '@/components/AuthManager';
 import { MessageContext } from '@/components/MessageManager';
+import { getCurrentTime } from '@/helpers/message';
 import IconWrapper, { IconSize } from '@/ui/IconWrapper';
 
 import styles from './styles.module.scss';
@@ -26,7 +27,9 @@ const ChatForm = () => {
     try {
       const response = await MessageService.sendMessage(idInstance, apiTokenInstance, data);
 
-      handleAddMessageData({ idMessage: response.idMessage, message: messageValue, outer: true });
+      const time = getCurrentTime();
+      setMessageValue('');
+      handleAddMessageData({ idMessage: response.idMessage, message: messageValue, time, outer: true });
     } catch (e) {
       console.log(e);
     }

@@ -28,7 +28,7 @@ const GetPhoneForm: FC<Props> = ({ onAddPhone }) => {
     event.preventDefault();
     setErrorText('');
 
-    if (/(?:\+|\d)[\d\-\(\) ]{9,}\d/g.test(phoneValue)) {
+    if (/^[7]\d{10}$/g.test(phoneValue)) {
       onAddPhone(phoneValue);
     } else {
       setErrorText('Невалидный номер телефона');
@@ -38,7 +38,13 @@ const GetPhoneForm: FC<Props> = ({ onAddPhone }) => {
   return (
     <AuthModal title='Введите номер телефона собеседника'>
       <form className={styles.form} onSubmit={handleSubmit}>
-        <TextField name='phone' label='Номер телефона' value={phoneValue} onChange={hanldeChangePhoneValue} />
+        <TextField
+          name='phone'
+          label='Номер телефона'
+          value={phoneValue}
+          onChange={hanldeChangePhoneValue}
+          placeholder='7XXXXXXXXXX'
+        />
         <BaseButton type='submit' disabled={isDisabled}>
           Подтвердить
         </BaseButton>

@@ -10,6 +10,7 @@ type TAuthContext = {
   authStatus: TAuthStatus;
   setAuthStatus: (status: TAuthStatus) => void;
   handleSetInstanceData: ({ idInstance, apiTokenInstance }: TInstanceData) => void;
+  handleLogout: () => void;
 };
 
 export const AuthContext = createContext<TAuthContext>({} as TAuthContext);
@@ -19,22 +20,26 @@ type Props = {
 };
 
 const AuthManager: FC<Props> = ({ children }) => {
+  // Vars
   const [cookies, setCookie] = useCookies(['idInstance', 'apiTokenInstance']);
-
   const [authStatus, setAuthStatus] = useState<TAuthStatus>('');
   const [idInstance, setIdInstance] = useState(cookies.idInstance ?? '');
   const [apiTokenInstance, setApiTokenInstance] = useState(cookies.apiTokenInstance ?? '');
 
+  // Handlers
   const handleSetInstanceData = ({ idInstance, apiTokenInstance }: TInstanceData) => {
     setIdInstance(idInstance);
     setApiTokenInstance(apiTokenInstance);
   };
 
+  const handleLogout = () => {
+    setAuthStatus('notAuthorized');
+  };
+
+  // Effects
   useEffect(() => {
-    if (idInstance && apiTokenInstance) {
-      setCookie('idInstance', idInstance);
-      setCookie('apiTokenInstance', apiTokenInstance);
-    }
+    setCookie('idInstance', idInstance);
+    setCookie('apiTokenInstance', apiTokenInstance);
   }, [apiTokenInstance, idInstance, setCookie]);
 
   useEffect(() => {
@@ -57,6 +62,7 @@ const AuthManager: FC<Props> = ({ children }) => {
         authStatus,
         setAuthStatus,
         handleSetInstanceData,
+        handleLogout,
       }}>
       {children}
     </AuthContext.Provider>
