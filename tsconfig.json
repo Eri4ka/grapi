@@ -31,7 +31,6 @@
       "@/constants/*": ["constants/*"],
       "@/helpers/*": ["helpers/*"],
       "@/styles/*": ["styles/*"],
-      "@/pages/*": ["pages/*"],
       "@/ui/*": ["ui/*"]
     }
   },
