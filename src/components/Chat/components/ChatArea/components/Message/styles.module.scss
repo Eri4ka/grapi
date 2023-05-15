@@ -1,8 +1,18 @@
+@import 'src/styles/variables.scss';
+
 .container {
   display: flex;
   justify-content: flex-start;
   margin-bottom: 0.75rem;
   padding: 0 4rem;
+
+  @media (max-width: $m) {
+    padding: 0 3rem;
+  }
+
+  @media (max-width: $s) {
+    padding: 0 2rem;
+  }
 
   &_out {
     justify-content: flex-end;
