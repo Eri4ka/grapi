@@ -19,12 +19,6 @@ export type TLogoutResponse = {
 };
 
 /* SET SETTINGS */
-export const SetSettingsData = {
-  markIncomingMessagesReaded: 'yes',
-  outgoingMessageWebhook: 'yes',
-  stateWebhook: 'yes',
-  incomingWebhook: 'yes',
-};
 
 export type TSetSettingsResponse = {
   saveSettings: boolean;
