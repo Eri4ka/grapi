@@ -27,3 +27,7 @@ yarn dev
 ---
 
 ## Видео
+
+
+https://github.com/Eri4ka/grapi/assets/83443130/bce29e54-d872-4f61-94d1-96d96e1ac55c
+
