@@ -1,14 +1,15 @@
 import { GET_QR_ENDPOINT, GET_STATE_INSTANCE_ENDPOINT, LOGOUT_ENDPOINT, SET_SETTINGS_ENDPOINT } from '../constants';
 import { request } from '../request';
-import {
-  TQrResponse,
-  TStateInstanceResponse,
-  TLogoutResponse,
-  SetSettingsData,
-  TSetSettingsResponse,
-} from '../types/user';
+import { TQrResponse, TStateInstanceResponse, TLogoutResponse, TSetSettingsResponse } from '../types/user';
 
 export const UserService = {
+  setSettingsData: {
+    markIncomingMessagesReaded: 'yes',
+    outgoingMessageWebhook: 'yes',
+    stateWebhook: 'yes',
+    incomingWebhook: 'yes',
+  },
+
   getStateInstance: async function (idInstance: string, apiTokenInstance: string): Promise<TStateInstanceResponse> {
     const response = await request(`waInstance${idInstance}/${GET_STATE_INSTANCE_ENDPOINT}/${apiTokenInstance}`);
     return response;
@@ -28,7 +29,7 @@ export const UserService = {
     const response = await request(
       `waInstance${idInstance}/${SET_SETTINGS_ENDPOINT}/${apiTokenInstance}`,
       'POST',
-      SetSettingsData,
+      this.setSettingsData,
     );
     return response;
   },
